@@ -15,3 +15,8 @@
     width: 300px;
     height: 400px;
 }
+
+.phone-button.highlight {
+    background-color: #555555;
+    color: aliceblue;
+}

@@ -14,6 +14,9 @@ function addMobileMenuEvent(triggers, contents, contentContainer) {
     triggers.forEach((trigger, i) => {
         trigger.addEventListener("click", () => {
             contentContainer.textContent = contents[i].textContent;
+
+            triggers.forEach(trigger => trigger.classList.remove("highlight"));
+            trigger.classList.add("highlight");
         });
     });
 
