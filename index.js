@@ -28,6 +28,9 @@ function addImagesCarouselEvent(imagesContainer, images, prevBtn, nextBtn) {
     // Assuming the frame we are working are squares that stick with each
     // other without any gap.
     let offset = images[0].width;
+    let fiveSecondsAutoClickId = setInterval(() => {
+        nextBtn.click();
+    }, 5000);
 
     prevBtn.addEventListener("click", () => {
         index--;
@@ -35,12 +38,22 @@ function addImagesCarouselEvent(imagesContainer, images, prevBtn, nextBtn) {
         if (index < 0) index += images.length;
 
         imagesContainer.style.left = `-${index * offset}px`;
+
+        clearInterval(fiveSecondsAutoClickId);
+        fiveSecondsAutoClickId = setInterval(() => {
+            nextBtn.click();
+        }, 5000);
     });
 
     nextBtn.addEventListener("click", () => {
         index = (index + 1) % images.length;
 
         imagesContainer.style.left = `-${index * offset}px`;
+
+        clearInterval(fiveSecondsAutoClickId);
+        fiveSecondsAutoClickId = setInterval(() => {
+            nextBtn.click();
+        }, 5000);
     });
 }
 
