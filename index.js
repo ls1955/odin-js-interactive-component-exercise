@@ -23,6 +23,27 @@ function addMobileMenuEvent(triggers, contents, contentContainer) {
     triggers[0].click();
 }
 
+function addImagesCarouselEvent(imagesContainer, images, prevBtn, nextBtn) {
+    let index = 0;
+    // Assuming the frame we are working are squares that stick with each
+    // other without any gap.
+    let offset = images[0].width;
+
+    prevBtn.addEventListener("click", () => {
+        index--;
+
+        if (index < 0) index += images.length;
+
+        imagesContainer.style.left = `-${index * offset}px`;
+    });
+
+    nextBtn.addEventListener("click", () => {
+        index = (index + 1) % images.length;
+
+        imagesContainer.style.left = `-${index * offset}px`;
+    });
+}
+
 let btnOne = document.querySelector(".button-one");
 let listOne = document.querySelector(".list-one");
 let btnTwo = document.querySelector(".button-two");
@@ -36,3 +57,10 @@ let phoneContents = document.querySelectorAll(".phone-button-content");
 let phoneContentContainer = document.querySelector(".phone-content-container");
 
 addMobileMenuEvent(phoneBtns, phoneContents, phoneContentContainer);
+
+let imagesContainer = document.querySelector(".images-container");
+let images = document.querySelectorAll(".image");
+let prevBtn = document.querySelector(".prev-frame-button");
+let nextBtn = document.querySelector(".next-frame-button");
+
+addImagesCarouselEvent(imagesContainer, images, prevBtn, nextBtn);
