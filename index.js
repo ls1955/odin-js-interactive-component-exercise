@@ -23,7 +23,7 @@ function addMobileMenuEvent(triggers, contents, contentContainer) {
     triggers[0].click();
 }
 
-function addImagesCarouselEvent(imagesContainer, images, prevBtn, nextBtn) {
+function addImagesCarouselEvent(imagesContainer, images, prevBtn, nextBtn, navDots) {
     let index = 0;
     // Assuming the frame we are working are squares that stick with each
     // other without any gap.
@@ -31,6 +31,8 @@ function addImagesCarouselEvent(imagesContainer, images, prevBtn, nextBtn) {
     let fiveSecondsAutoClickId = setInterval(() => {
         nextBtn.click();
     }, 5000);
+
+    // Generate all those nav dot at here?
 
     prevBtn.addEventListener("click", () => {
         index--;
@@ -43,6 +45,7 @@ function addImagesCarouselEvent(imagesContainer, images, prevBtn, nextBtn) {
         fiveSecondsAutoClickId = setInterval(() => {
             nextBtn.click();
         }, 5000);
+        applyHighlight(navDots, index);
     });
 
     nextBtn.addEventListener("click", () => {
@@ -54,7 +57,30 @@ function addImagesCarouselEvent(imagesContainer, images, prevBtn, nextBtn) {
         fiveSecondsAutoClickId = setInterval(() => {
             nextBtn.click();
         }, 5000);
+        applyHighlight(navDots, index);
     });
+
+    navDots.forEach((navDot, i) => {
+        navDot.addEventListener("click", () => {
+            index = i;
+            
+            imagesContainer.style.left = `-${index * offset}px`;
+
+            clearInterval(fiveSecondsAutoClickId);
+            fiveSecondsAutoClickId = setInterval(() => {
+                nextBtn.click();
+            }, 5000);
+
+            applyHighlight(navDots, index);
+        });
+    });
+
+    applyHighlight(navDots, index);
+}
+
+function applyHighlight(navDots, index) {
+    navDots.forEach(navDot => navDot.classList.remove("highlight"));
+    navDots[index].classList.add("highlight");
 }
 
 let btnOne = document.querySelector(".button-one");
@@ -75,5 +101,6 @@ let imagesContainer = document.querySelector(".images-container");
 let images = document.querySelectorAll(".image");
 let prevBtn = document.querySelector(".prev-frame-button");
 let nextBtn = document.querySelector(".next-frame-button");
+let navDots = document.querySelectorAll(".nav-dot");
 
-addImagesCarouselEvent(imagesContainer, images, prevBtn, nextBtn);
+addImagesCarouselEvent(imagesContainer, images, prevBtn, nextBtn,navDots);
