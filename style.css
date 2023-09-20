@@ -48,7 +48,7 @@ body {
     top: 0;
     left: 0;
 
-    transition: 2s left ease-in-out;
+    transition: left 2s ease;
 }
 
 img {
