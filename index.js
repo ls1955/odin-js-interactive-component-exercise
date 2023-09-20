@@ -41,10 +41,7 @@ function addImagesCarouselEvent(imagesContainer, images, prevBtn, nextBtn, navDo
 
         imagesContainer.style.left = `-${index * offset}px`;
 
-        clearInterval(fiveSecondsAutoClickId);
-        fiveSecondsAutoClickId = setInterval(() => {
-            nextBtn.click();
-        }, 5000);
+        resetAutoClickInterval();
         applyHighlight(navDots, index);
     });
 
@@ -53,10 +50,7 @@ function addImagesCarouselEvent(imagesContainer, images, prevBtn, nextBtn, navDo
 
         imagesContainer.style.left = `-${index * offset}px`;
 
-        clearInterval(fiveSecondsAutoClickId);
-        fiveSecondsAutoClickId = setInterval(() => {
-            nextBtn.click();
-        }, 5000);
+        resetAutoClickInterval();
         applyHighlight(navDots, index);
     });
 
@@ -66,21 +60,24 @@ function addImagesCarouselEvent(imagesContainer, images, prevBtn, nextBtn, navDo
             
             imagesContainer.style.left = `-${index * offset}px`;
 
-            clearInterval(fiveSecondsAutoClickId);
-            fiveSecondsAutoClickId = setInterval(() => {
-                nextBtn.click();
-            }, 5000);
-
+            resetAutoClickInterval();
             applyHighlight(navDots, index);
         });
     });
 
-    applyHighlight(navDots, index);
-}
+    function resetAutoClickInterval() {
+        clearInterval(fiveSecondsAutoClickId);
+            fiveSecondsAutoClickId = setInterval(() => {
+                nextBtn.click();
+        }, 5000);
+    }
 
-function applyHighlight(navDots, index) {
-    navDots.forEach(navDot => navDot.classList.remove("highlight"));
-    navDots[index].classList.add("highlight");
+    function applyHighlight(navDots, index) {
+        navDots.forEach(navDot => navDot.classList.remove("highlight"));
+        navDots[index].classList.add("highlight");
+    }
+
+    applyHighlight(navDots, 0);
 }
 
 let btnOne = document.querySelector(".button-one");
